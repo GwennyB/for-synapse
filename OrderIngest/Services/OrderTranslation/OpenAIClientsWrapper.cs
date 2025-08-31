@@ -6,6 +6,8 @@ using OpenAI.Responses;
 
 public class OpenAIClientsWrapper : IOpenAIClientsWrapper
 {
+    private readonly OpenAIResponseClient _responseClient;
+
     /// <summary>
     /// Creates an instance of the <see cref="IOpenAIClientsWrapper"/>.
     /// </summary>
@@ -15,9 +17,13 @@ public class OpenAIClientsWrapper : IOpenAIClientsWrapper
         string apiKey = configuration.GetValue<string>("OpenAIKey");
         string model = configuration.GetValue<string>("OpenAIModel");
         OpenAIClient client = new OpenAIClient(apiKey);
-        ResponseClient = client.GetOpenAIResponseClient(model);
+        _responseClient = client.GetOpenAIResponseClient(model);
     }
 
     /// <inheritdoc/>
-    public OpenAIResponseClient ResponseClient { get; }
+    public async Task<string> CreateResponseAsync(string prompt)
+    {
+        OpenAIResponse response = await _responseClient.CreateResponseAsync(prompt);
+        return response.GetOutputText();
+    }
 }

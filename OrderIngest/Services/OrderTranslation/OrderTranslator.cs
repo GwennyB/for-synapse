@@ -53,7 +53,7 @@ public class OrderTranslator : IOrderTranslator
         """;
 
     private readonly IOrderLogger _logger;
-    private readonly OpenAIResponseClient _responseClient;
+    private readonly IOpenAIClientsWrapper _openAIClientsWrapper;
 
     /// <summary>
     /// Creates a new instance of the <see cref="IOrderTranslator"/>.
@@ -63,7 +63,7 @@ public class OrderTranslator : IOrderTranslator
     public OrderTranslator(IOrderLogger logger, IOpenAIClientsWrapper openAIClientWrapper)
     {
         _logger = logger;
-        _responseClient = openAIClientWrapper.ResponseClient;
+        _openAIClientsWrapper = openAIClientWrapper;
     }
 
     /// <inheritdoc/>
@@ -73,8 +73,7 @@ public class OrderTranslator : IOrderTranslator
         {
             _logger.LogTrace(LogCategory.Ingest, "Starting translation...");
             string prompt = ConvertOrderPrompt + rawOrder;
-            OpenAIResponse response = await _responseClient.CreateResponseAsync(prompt);
-            string result = response.GetOutputText();
+            string result = await _openAIClientsWrapper.CreateResponseAsync(prompt);
             _logger.LogTrace(LogCategory.Ingest, "Translation complete.");
 
             // Validate the result by attempting to convert it to an Order object.

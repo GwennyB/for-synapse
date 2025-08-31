@@ -8,7 +8,7 @@ using OpenAI.Responses;
 public interface IOpenAIClientsWrapper
 {
     /// <summary>
-    /// Gets the OpenAI Response client.
+    /// Testable pass-through for the response from the OpenAI Responses API client.
     /// </summary>
-    OpenAIResponseClient ResponseClient { get; }
+    Task<string> CreateResponseAsync(string prompt);
 }

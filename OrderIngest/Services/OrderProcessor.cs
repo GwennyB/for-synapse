@@ -1,10 +1,8 @@
 ﻿namespace OrderIngest.Services;
 
-using OrderIngest.Models;
 using OrderIngest.Services.Common;
 using OrderIngest.Services.HttpClients;
 using OrderIngest.Services.OrderTranslation;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 /// <summary>
