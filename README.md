@@ -22,7 +22,7 @@ This refactor addresses the above while also touching stretch goals:
 
 ## Running the solution
 
-Add your OpenAI API key and model selection in user secrets:
+First, clone the repo and build the solution. Then add your OpenAI API key and model selection in user secrets:
 ```
 dotnet user-secrets set OpenAIKey <your-api-key-here>
 dotnet user-secets set OpenAIModel <your-model-choice-here>
